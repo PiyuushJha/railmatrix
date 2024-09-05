@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Platform 3D map</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ebeae2; /* AliceBlue background */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            flex-direction: column;
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+        .slideshow-container {
+            position: absolute;
+            top: 9%;
+            left: 0;
+            width: 100%;
+            height:100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .slideshow-container img {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 2.25s ease-in-out;
+        }
+
+        .slideshow-container img.active {
+            opacity: 2;
+        }
+
+        .container {
+            text-align: center;
+            background-color: #FAF9F6; /* Semi-transparent white background for the container */
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+            box-sizing: border-box;
+            margin: 0 auto;
+            z-index: 1;
+            position: relative;
+        }
+
+        .header {
+            width: 100%;
+            background-color: #4F42B5;/* Dark grey background color for the heading */
+            padding: 25px;
+            text-align: left;
+            border-radius: 8px 8px 0 0;
+            margin-bottom: 0.5cm; /* Add a 1cm gap */
+            box-sizing: border-box;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            
+        }
+        .header h1 {
+            color: #020d1f94; /* White text color */
+            margin: 0;
+        }
+        nav {
+            font-family: 'Lucida Bright';
+        }
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            gap: 30px; /* Space between links */
+        }
+        nav ul li {
+            display: inline;
+             margin-left: 0.2cm;
+
+        }
+        nav ul li a {
+            color: #ffffff; /* White text color */
+            text-decoration: none;
+            font-size: 15px;
+        }
+        nav ul li a:hover {
+            text-decoration: underline;
+        }
+        h2 {
+            color: #555555; /* Lighter grey color for subheadings */
+        }
+        select, input {
+            width: 80%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #cccccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #205f22; /* Green background */
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049; /* Darker green on hover */
+        }
+        .footer {
+            text-align: center;
+            font-size: 14px;
+            color: #888888;
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            position: relative;
+            z-index: 2;
+            background-color: #ffffff;
+            margin-top: 0.4cm;
+
+        }
+        .footer p {
+            margin: 5px 0;
+        }
+        #error-message {
+            color: red;
+            display: none;
+        }
+    </style>
+    
+    <script>
+        let slideIndex = 0;
+
+        function showSlides() {
+            const slides = document.querySelectorAll('.slideshow-container img');
+            slides.forEach((slide, index) => {
+                slide.classList.remove('active');
+            });
+
+            slideIndex++;
+            if (slideIndex > slides.length) {
+                slideIndex = 1;
+            }
+            slides[slideIndex - 1].classList.add('active');
+
+            setTimeout(showSlides, 1500); // Change image every 1.5 seconds
+        }
+
+        document.addEventListener('DOMContentLoaded', showSlides);
+        function navigateToStation() {
+            const selectElement = document.getElementById('railway-stations');
+            const selectedStation = selectElement.value;
+
+            if (selectedStation) {
+                const platformNumber = prompt("Please enter the platform number");
+                if (platformNumber && !isNaN(platformNumber)) {
+                    // Proceed with the action (navigate to a specific page or log the information)
+                    alert(`Navigating to ${selectedStation} on Platform ${platformNumber}`);
+                    // Uncomment the line below to navigate to the page (adjust logic as needed)
+                  window.location.href = selectedStation + ".html";
+                  // window.open(url, "_blank");
+                } else {
+                    alert("Please enter a valid platform number between 1 and 10.");
+                }
+            } else {
+                alert("Please select a railway station.");
+            }
+        }
+
+        function startVoiceSearch() {
+            const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+            recognition.lang = 'en-IN';
+            recognition.start();
+
+            recognition.onresult = function(event) {
+                const speechResult = event.results[0][0].transcript.toLowerCase();
+                document.getElementById('recognized-text').value = speechResult;
+
+                const options = document.getElementById('railway-stations').options;
+                for (let i = 0; i < options.length; i++) {
+                    if (options[i].text.toLowerCase() === speechResult) {
+                        options[i].selected = true;
+                        break;
+                    }
+                }
+            };
+
+            recognition.onerror = function(event) {
+                console.error("Speech recognition error detected: " + event.error);
+            };
+        }
+
+        function checkPNRStatus() {
+            const pnrNumber = document.getElementById('pnr-number').value;
+            if (pnrNumber) {
+                window.location.href = "check-pnr.html?pnr=" + pnrNumber;
+            }
+        }
+    </script>
+</head>
+<body><script src="server.js"></script>
+    <div class="header"><font face="Times New Roman" style="font-size: 22px" >
+        <h1> Rail Matrix</h1></font>
+        <nav>
+            <ul><br> <font face="Lucida Bright              ">
+                <li><a href="#home" style="font-size: 21px;">Home</a></li>
+                <li><a href="#about" style="font-size: 21px;">About</a></li>
+                <li><a href="sineup.html" target="_blank" style="font-size: 21px;">Signup</a></li>
+                </font>
+            </ul>
+        </nav>
+    </div>
+ 
+    <div class="container">
+        <h2>Select Railway Station</h2>
+        
+        <select id="railway-stations">
+            <option value="">Select a station...</option>
+            <option value="new-delhi">New Delhi</option>
+            <option value="csmt">Chhatrapati Shivaji Maharaj Terminus</option>
+            <option value="howrah">Howrah Junction</option>
+            <option value="chennai-central">Chennai Central</option>
+            <option value="bangalore-city">Bangalore City Junction</option>
+            <!-- Add more stations as needed -->
+        </select>
+        <br>
+        <button onclick="startVoiceSearch()">Voice Search</button>
+        <br>
+        <input type="text" id="recognized-text" readonly placeholder="Recognized text will appear here">
+        <br>
+        <button onclick="navigateToStation()">Submit</button>
+        <h2>Check PNR Status</h2>
+        <!-- Add this to your existing input field -->
+<input type="text" id="pnr-number" placeholder="Enter your PNR number" oninput="validatePNR()">
+<p id="error-message" style="color: red; display: none;">PNR number should be numeric only.</p>
+
+<!-- Add this JavaScript function -->
+<script>
+    function validatePNR() {
+        const pnrInput = document.getElementById('pnr-number');
+        const errorMessage = document.getElementById('error-message');
+        const pnrValue = pnrInput.value;
+
+        if (isNaN(pnrValue) || pnrValue.includes(' ')) {
+            errorMessage.style.display = 'block';
+            pnrInput.value = pnrValue.replace(/\D/g, ''); // Remove non-numeric characters
+        } else {
+            errorMessage.style.display = 'none';
+        }
+    }
+    async function checkPNRStatus() {
+        const pnr = document.getElementById('pnr-number').value;
+        const resultDisplay = document.getElementById('pnr-result');
+
+        // Clear previous result
+        resultDisplay.textContent = '';
+
+        // Simple validation check
+        if (pnr.length !== 10 || isNaN(pnr)) {
+            alert('Please enter a valid 10-digit numeric PNR number.');
+            return;
+        }
+
+        try {
+            // Send request to the backend
+            const response = await fetch(`http://localhost:3000/pnr-status/${pnr}`);
+            
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+
+            const data = await response.json();
+
+            if (data.success) {
+                resultDisplay.textContent = `PNR Status: ${JSON.stringify(data.pnrStatus)}`;
+            } else {
+                resultDisplay.textContent = 'Unable to fetch PNR status.';
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            resultDisplay.textContent = 'Error fetching PNR status. Please try again later.';
+        }
+    }
+
+</script>
+        <br>
+        <button onclick="checkPNRStatus()">Check PNR Status</button>
+    </div><br>
+    <br>
+    <br><br>
+
+    <section id="about"  style="background-color: #f8f7f7e0;"><center>
+        <div class="container" style="width: 80%; max-width: none; padding: 20px;">
+          <div> <center>
+            <font face="Times New Roman"><h1 style="font-size: 40px;" style="color: rgb(10, 10, 10);">ABOUT</h1></font><hr></Center><br>
+      
+            <p>Hello! I'm Piyush Ranjan Jha. I'm passionate about the digital world and love crafting unique experiences that leave a lasting impression. With a background in coding and design, I enjoy turning ideas into reality.
+  
+              My journey into the digital realm started early, driven by a curiosity to understand technology. Over the years, I've honed my skills in web development, graphic design, and user experience to create engaging solutions.
+              
+              I believe in the power of continuous learning and exploration. Whether it's mastering a new programming language or experimenting with emerging technologies, I'm always eager to expand my knowledge.
+              
+              Outside of work, you can find me exploring nature, capturing moments through photography, or getting lost in a good book. I'm also passionate about giving back to the community and making a positive impact wherever I can.
+              
+              Let's collaborate and bring your ideas to life! Whether you're looking to build a website, develop an app, or create captivating visuals, I'm here to help you achieve your goals.
+              
+              Feel free to reach out, and let's create something amazing together!.</p>
+            <span class="inline-block h-1 w-10 rounded bg-indigo-700 mt-8 mb-6 style="#color:FF0000 ;" ></span><br><hr>
+            <h2 class="text-white font-medium title-font tracking-wider text-xl">Team:RailMatrix
+            </h2>
+            <p style="color: rgba(0, 0, 0, 0.582);">Student of VIT-AP</p>
+          </div>
+        </div>
+    </center>
+      </section><br>
+
+      <div class="footer">     
+        <p>For queries, contact us:</p>
+        <p>Email: support@railmatrix.com | Phone: +91-12345-67890</p>
+        <p>&copy; 2024 RAILMATRIX. All rights reserved.</p>
+    </div>
+</section>
+</body>
+</html>
