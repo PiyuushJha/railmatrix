@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> Platform 3D map</title>
+    <link rel="stylesheet" href="style.css"> 
+    <script src="server.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -15,7 +17,7 @@
             align-items: flex-start;
             flex-direction: column;
             min-height: 100vh;
-            box-sizing: border-box;
+            box-sizing: border;
         }
         .slideshow-container {
             position: absolute;
@@ -59,13 +61,17 @@
             background-color: #333333; /* Dark grey background color for the heading */
             padding: 25px;
             text-align: left;
-            border-radius: 8px 8px 0 0;
+            border-radius: 0px 0px 0 0;
             margin-bottom: 0.5cm; /* Add a 1cm gap */
             box-sizing: border-box;
             display: flex;
             justify-content: space-between;
             align-items: center;
             
+        }
+       
+        .header {
+            text-align: center;
         }
         .header h1 {
             color: #ffffff; /* White text color */
@@ -208,20 +214,26 @@
         }
     </script>
 </head>
-<body><script src="server.js"></script>
-    <div class="header"><font face="Times New Roman" style="font-size: 22px" >
-        <h1> Rail Matrix</h1></font>
+<body>
+    <div class="header">
+        <img src="21.jpg" alt="Rail Matrix Logo" class="centered-image" style="width: 250px; height: auto;">
         <nav>
-            <ul><br> <font face="Lucida Bright              ">
-                <li><a href="#home" style="font-size: 21px;">Home</a></li>
-                <li><a href="#about" style="font-size: 21px;">About</a></li>
-                <li><a href="sineup.html" target="_blank" style="font-size: 21px;">Signup</a></li>
-                </font>
-            </ul>
+           
+                <li class="more-menu">
+                    <button class="more-menu-btn">More</button>
+                    <div class="more-menu-content">
+                        <a href="#home" style="font-size: 21px;">Home</a>
+                        <a href="#holiday" style="font-size: 21px;">Holiday</a>
+                        <a href="#about" style="font-size: 21px;">About</a><hr>
+                        <a href="sineup.html" target="_blank" style="font-size: 21px;" style="background-color: #cb1414e0;">Signup</a>
+                        
+                    </div>
+                </li>
+            
         </nav>
     </div>
     <div class="slideshow-container">
-        <img src="21.jpg" class="slides active" alt="Slide 1">
+        <img src="15.jpg" class="slides active" alt="Slide 1">
         
         
         
@@ -302,13 +314,12 @@
         <button onclick="checkPNRStatus()">Check PNR Status</button>
     </div><br>
     <br>
-    <br><br><br>
- 
-        <h2><center>HOLIDAYS</center></h2>
+    <section id="holiday"  >
+    <div><font face="Times New Roman"><h2 style="font-size: 30px;" style="color: rgb(10, 10, 10);">HOLIDAY PACKAGES</h2></font>
         <div class="holiday-packages" >
             <div class="package left"  style="background-color: #f8f7f7e0;">
                 <div class="upperimg"  style="background-color: #f8f7f7e0;">
-                    <img src="./assets/images/exterior.jpg" alt="Maharajas Express">
+                    <img src="maharaja.jpg" alt="Maharajas Express">
                 </div>
                 <div >
                     <h3>Maharajas' Express</h3>
@@ -319,7 +330,7 @@
     
             <div class="package center" style="background-color: #f8f7f7e0;">
                 <div class="upperimg"  style="background-color: #f8f7f7e0;">
-                    <img src="./assets/images/Thailand.jpg" alt="International Packages">
+                    <img src="international.jpg" alt="International Packages">
                 </div>
                 <div class="blogdetail">
                     <h3>International Packages</h3>
@@ -330,7 +341,7 @@
     
             <div class="package right"  style="background-color: #f8f7f7e0;">
                 <div class="upperimg"  style="background-color: #f8f7f7e0;">
-                    <img src="./assets/images/Kashmir.jpg" alt="Domestic Air Packages">
+                    <img src="Kashmir.jpg" alt="Domestic Air Packages">
                 </div>
                 <div class="blogdetail"  style="background-color: #f8f7f7e0;">
                     <h3>Domestic Air Packages</h3>
@@ -339,7 +350,7 @@
                 </div>
             </div>
         </div>
-    
+    </div></section>
     <style>
  
     h2 {
@@ -349,37 +360,38 @@
         display: flex;
         justify-content: space-between; /* Spread packages across the screen */
         align-items: flex-start;
-        width: 90%;
-        gap: 0.5cm;
+        width: 95%;
+        gap: 20px;
     }
     
     .package {
-        border: 1px solid gainsboro;
-        border-radius: 10px;
+        border: 0px solid gainsboro;
+        border-radius: 5px;
         box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
-        padding: 12px;
-        width: 90%; /* Adjust the width of each package */
+        padding: 10px;
+        width: 95%; /* Adjust the width of each package */
     }
-    
     .package.left {
-        align-self: flex-start; /* Align to the left */
+        margin-left: 1.5cm;
     }
+   
     
     .package.center {
         align-self: center; /* Align to the center */
     }
     
     .package.right {
-        align-self: flex-end; /* Align to the right */
+         /* Align to the right */
+        margin-top: -0.04cm;
     }
     
     .upperimg img {
         width: 100%;
-        border-radius: 10px;
+        border-radius: 5px;
     }
     
     .blogdetail {
-        margin-top: 10px;
+        margin-top: 5px;
     }
     
     a {
@@ -391,7 +403,7 @@
         text-decoration: underline;
     }
     
-    @media (max-width: 755px) {
+    @media (max-width: 600px) {
         .holiday-packages {
             flex-direction: column;
             align-items: center;
@@ -399,7 +411,7 @@
     
         .package {
             width: 100%;
-            margin-bottom: 19px;
+            margin-bottom: 15px;
         }
     }
     </style>
@@ -409,17 +421,8 @@
           <div> <center>
             <font face="Times New Roman"><h1 style="font-size: 40px;" style="color: rgb(10, 10, 10);">ABOUT</h1></font><hr></Center><br>
       
-            <p>Hello! I'm Piyush Ranjan Jha. I'm passionate about the digital world and love crafting unique experiences that leave a lasting impression. With a background in coding and design, I enjoy turning ideas into reality.
-  
-              My journey into the digital realm started early, driven by a curiosity to understand technology. Over the years, I've honed my skills in web development, graphic design, and user experience to create engaging solutions.
-              
-              I believe in the power of continuous learning and exploration. Whether it's mastering a new programming language or experimenting with emerging technologies, I'm always eager to expand my knowledge.
-              
-              Outside of work, you can find me exploring nature, capturing moments through photography, or getting lost in a good book. I'm also passionate about giving back to the community and making a positive impact wherever I can.
-              
-              Let's collaborate and bring your ideas to life! Whether you're looking to build a website, develop an app, or create captivating visuals, I'm here to help you achieve your goals.
-              
-              Feel free to reach out, and let's create something amazing together!.</p>
+            <p>Welcome to our railway station navigation platform, designed to enhance your travel experience with ease and efficiency. Our solution provides real-time, detailed maps to assist passengers in locating essential facilities such as ticket counters, platforms, restrooms, and more. Available via website & mobile application, our system offers precise, step-by-step navigation to ensure seamless movement within the station. With additional features like voice guidance for visually impaired passengers and continuous updates to reflect any changes in station layouts, we are committed to improving accessibility, reducing congestion, and ensuring a stress-free journey for all.   
+                Feel free to reach out, and let's create something amazing together!.</p>
             <span class="inline-block h-1 w-10 rounded bg-indigo-700 mt-8 mb-6 style="#color:FF0000 ;" ></span><br><hr>
             <h2 class="text-white font-medium title-font tracking-wider text-xl">Team:RailMatrix
             </h2>
@@ -428,7 +431,80 @@
         </div>
     </center>
       </section><br>
-
+      <app-footer _ngcontent-fef-c54="" _nghost-fef-c49="">
+        <div _ngcontent-fef-c49="" class="footer-content">
+            <!-- Span and Logo in the same line -->
+            <div _ngcontent-fef-c49="" class="footer-header">
+                <span style="color: rgba(21, 7, 7, 0.708); font-size: 17px;">Get Connected with us on social networks</span>
+            
+    
+            <!-- Social Media Icons as Images -->
+            <div _ngcontent-fef-c49="" class="footer-icons">
+                <a _ngcontent-fef-c49="" target="_blank" rel="noopener noreferrer" href="https://www.facebook.com/IRCTCofficial/"
+                   aria-label="I.R.C.T.C. Official Facebook page" class="social-icon">
+                    <img src="f.png" alt="Facebook" class="social-media-img">
+                </a>
+                <a _ngcontent-fef-c49="" target="_blank" rel="noopener noreferrer" href="https://whatsapp.com/channel/0029Va4wpCW84OmKdPNQi41P"
+                   aria-label="I.R.C.T.C. Official WhatsApp page" class="social-icon">
+                    <img src="w.png" alt="WhatsApp" class="social-media-img">
+                </a>
+                <a _ngcontent-fef-c49="" target="_blank" rel="noopener noreferrer" href="https://youtube.com/c/IRCTCOFFICIAL"
+                   aria-label="I.R.C.T.C. Official YouTube page" class="social-icon">
+                    <img src="y.png" alt="YouTube" class="social-media-img">
+                </a>
+                <a _ngcontent-fef-c49="" target="_blank" rel="noopener noreferrer" href="https://instagram.com/irctc.official?igshid=yyg5byow704l"
+                   aria-label="I.R.C.T.C. Official Instagram page" class="social-icon">
+                    <img src="insta.png" alt="Instagram" class="social-media-img">
+                </a>
+                <a _ngcontent-fef-c49="" target="_blank" rel="noopener noreferrer" href="https://www.linkedin.com/company/irctcofficial"
+                   aria-label="I.R.C.T.C. Official LinkedIn page" class="social-icon">
+                    <img src="l.png" alt="LinkedIn" class="social-media-img">
+                </a>
+              
+                
+                <a _ngcontent-fef-c49="" target="_blank" rel="noopener noreferrer" href="https://twitter.com/IRCTCofficial"
+                   aria-label="I.R.C.T.C. Official Twitter page" class="social-icon">
+                    <img src="t.png" alt="Twitter" class="social-media-img">
+                </a>
+            </div>
+            </div>
+        </div>
+    </app-footer>
+    
+    <style>
+    .footer-content {
+        padding: 20px;
+        background-color: #f8f9fa;
+    }
+    
+    .footer-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+    
+    .app-logo {
+        width: 100px; /* Adjust the size of the logo */
+        height: auto;
+    }
+    
+    .footer-icons {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    
+    .social-icon {
+        margin: 0 10px;
+    }
+    
+    .social-media-img {
+        width: 40px; /* Adjust icon size */
+        height: auto;
+    }
+    </style>
+    
       <div class="footer">     
         <p>For queries, contact us:</p>
         <p>Email: support@railmatrix.com | Phone: +91-12345-67890</p>
